@@ -1,5 +1,4 @@
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+/* global L:readonly */
 import { getAds } from './data.js';
 import { disableForms, activateForms } from './forms-state.js';
 import { createPopup } from './popup.js';

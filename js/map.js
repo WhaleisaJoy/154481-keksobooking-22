@@ -1,5 +1,4 @@
 /* global L:readonly */
-import { getAds } from './data.js';
 import { disableForms, activateForms } from './forms-state.js';
 import { createPopup } from './popup.js';
 
@@ -11,12 +10,16 @@ const MAIN_PIN_ICON_ANCHOR = [26, 52];
 const MARKER_SIZE = [40, 40];
 const MARKER_ANCHOR = [20, 40];
 
-const offers = getAds();
 const addressInput = document.querySelector('#address');
 
 const setAddress = () => {
   let {lat, lng} = mainPinMarker.getLatLng();
   addressInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+}
+
+const resetMainPinMarker = () => {
+  mainPinMarker.setLatLng([INITIAL_LAT, INITIAL_LNG]);
+  setAddress();
 }
 
 
@@ -67,24 +70,28 @@ mainPinMarker.on('moveend', () => setAddress());
 
 
 
-offers.forEach((offer) => {
-  const icon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: MARKER_SIZE,
-    iconAnchor: MARKER_ANCHOR,
+const renderSimilarAds = (ads) => {
+  ads.forEach((ad) => {
+    const icon = L.icon({
+      iconUrl: 'img/pin.svg',
+      iconSize: MARKER_SIZE,
+      iconAnchor: MARKER_ANCHOR,
+    });
+
+    const marker = L.marker(
+      {
+        lat: ad.location.lat,
+        lng: ad.location.lng,
+      },
+      {
+        icon: icon,
+      },
+    );
+
+    marker
+      .addTo(map)
+      .bindPopup(createPopup(ad));
   });
+}
 
-  const marker = L.marker(
-    {
-      lat: offer.location.x,
-      lng: offer.location.y,
-    },
-    {
-      icon: icon,
-    },
-  );
-
-  marker
-    .addTo(map)
-    .bindPopup(createPopup(offer));
-});
+export { renderSimilarAds, resetMainPinMarker }

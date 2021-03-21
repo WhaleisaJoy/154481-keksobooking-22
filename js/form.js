@@ -1,3 +1,7 @@
+import { resetMainPinMarker } from './map.js';
+import { showAlert } from './alerts.js';
+import { sendData } from './api.js'
+
 const adForm = document.querySelector('.ad-form');
 const titleInput = adForm.querySelector('#title');
 const type = adForm.querySelector('#type');
@@ -6,6 +10,10 @@ const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
+const resetButton = adForm.querySelector('.ad-form__reset');
+
+const successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
+const errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
 
 const TITLE_MIN_LENGTH = 30;
 const TITLE_MAX_LENGTH = 100;
@@ -48,6 +56,30 @@ const checkRoomsCapacity = () => {
   } else {
     capacity.setCustomValidity('');
   }
+}
+
+const setAdFormSubmit = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const onSuccess = () => {
+      resetAdForm();
+      showAlert(successMessage);
+    }
+    const onFail = () => showAlert(errorMessage);
+    const formData = new FormData(evt.target);
+
+    sendData(
+      onSuccess,
+      onFail,
+      formData,
+    );
+  });
+}
+
+const resetAdForm = () => {
+  adForm.reset();
+  resetMainPinMarker();
 }
 
 
@@ -100,6 +132,12 @@ roomNumber.addEventListener('change', checkRoomsCapacity);
 capacity.addEventListener('change', checkRoomsCapacity);
 
 
+setAdFormSubmit();
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetAdForm();
+});
 
 
 

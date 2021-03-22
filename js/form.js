@@ -1,5 +1,6 @@
 import { resetMainPinMarker } from './map.js';
-import { showAlert } from './alerts.js';
+import { showSendDataSuccessAlert } from './success.js';
+import { showSendDataErrorAlert } from './error.js';
 import { sendData } from './api.js'
 
 const adForm = document.querySelector('.ad-form');
@@ -11,9 +12,6 @@ const timeOut = adForm.querySelector('#timeout');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const resetButton = adForm.querySelector('.ad-form__reset');
-
-const successMessage = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
-const errorMessage = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
 
 const TITLE_MIN_LENGTH = 30;
 const TITLE_MAX_LENGTH = 100;
@@ -64,9 +62,9 @@ const setAdFormSubmit = () => {
 
     const onSuccess = () => {
       resetAdForm();
-      showAlert(successMessage);
+      showSendDataSuccessAlert();
     }
-    const onFail = () => showAlert(errorMessage);
+    const onFail = (err) => showSendDataErrorAlert(err);
     const formData = new FormData(evt.target);
 
     sendData(

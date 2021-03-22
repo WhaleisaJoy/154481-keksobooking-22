@@ -16,9 +16,15 @@ const closeAlert = () => {
   document.removeEventListener('keydown', onAlertEscKeydown);
 }
 
-const showSendDataErrorAlert = () => {
+const showSendDataErrorAlert = (err) => {
   errorMessage.style.zIndex = 1000;
   main.appendChild(errorMessage);
+
+  if (err) {
+    const errorMessageText = errorMessage.querySelector('.error__message');
+    let currentErrorMessageText = errorMessageText.textContent;
+    errorMessageText.textContent = `${currentErrorMessageText}: ${err}`;
+  }
 
   errorMessage.addEventListener('click', () => closeAlert());
   document.addEventListener('keydown', onAlertEscKeydown);

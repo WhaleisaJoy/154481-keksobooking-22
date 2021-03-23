@@ -9,6 +9,7 @@ const MAIN_PIN_ICON_SIZE = [52, 52];
 const MAIN_PIN_ICON_ANCHOR = [26, 52];
 const MARKER_SIZE = [40, 40];
 const MARKER_ANCHOR = [20, 40];
+const SIMILAR_ADS_COUNT = 10;
 
 const addressInput = document.querySelector('#address');
 
@@ -70,28 +71,33 @@ mainPinMarker.on('moveend', () => setAddress());
 
 
 
+const markersLayerGroup = L.layerGroup();
+
 const renderSimilarAds = (ads) => {
-  ads.forEach((ad) => {
-    const icon = L.icon({
-      iconUrl: 'img/pin.svg',
-      iconSize: MARKER_SIZE,
-      iconAnchor: MARKER_ANCHOR,
+  ads
+    .slice(0, SIMILAR_ADS_COUNT)
+    .forEach((ad) => {
+      const icon = L.icon({
+        iconUrl: 'img/pin.svg',
+        iconSize: MARKER_SIZE,
+        iconAnchor: MARKER_ANCHOR,
+      });
+
+      const marker = L.marker(
+        {
+          lat: ad.location.lat,
+          lng: ad.location.lng,
+        },
+        {
+          icon: icon,
+        },
+      );
+
+      marker.bindPopup(createPopup(ad));
+      markersLayerGroup
+        .addLayer(marker)
+        .addTo(map);
     });
-
-    const marker = L.marker(
-      {
-        lat: ad.location.lat,
-        lng: ad.location.lng,
-      },
-      {
-        icon: icon,
-      },
-    );
-
-    marker
-      .addTo(map)
-      .bindPopup(createPopup(ad));
-  });
 }
 
-export { renderSimilarAds, resetMainPinMarker }
+export { renderSimilarAds, resetMainPinMarker, markersLayerGroup, SIMILAR_ADS_COUNT }

@@ -2,6 +2,7 @@ import { resetMainPinMarker } from './map.js';
 import { showSendDataSuccessAlert } from './success.js';
 import { showSendDataErrorAlert } from './error.js';
 import { sendData } from './api.js'
+import { resetPhotos } from './upload-photo.js';
 
 const adForm = document.querySelector('.ad-form');
 const titleInput = adForm.querySelector('#title');
@@ -78,6 +79,7 @@ const setAdFormSubmit = () => {
 const resetAdForm = () => {
   adForm.reset();
   resetMainPinMarker();
+  resetPhotos();
 }
 
 

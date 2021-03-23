@@ -1,16 +1,6 @@
 const getRandomFloatNumber = function (min, max, simbolsNumberAfterPoint) {
-  if (min < 0) {
-    min = Math.abs(min);
-  }
-
-  if (max < 0) {
-    max = Math.abs(max);
-  }
-
-  if (min > max) {
-    let minValueStorage = min;
-    min = max;
-    max = minValueStorage;
+  if (min < 0 || max < 0 || min > max) {
+    throw new Error('Недопустимые параметры');
   }
 
   let randomFloatNumber = Math.random() * (max - min) + min;
@@ -52,4 +42,9 @@ const getRandomUniqArray = function (array) {
   return newArray;
 }
 
-export { getRandomFloatNumber, getRandomNumber, getRandomArrayElement, getRandomUniqArray };
+
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+}
+
+export { getRandomFloatNumber, getRandomNumber, getRandomArrayElement, getRandomUniqArray, isEscEvent };

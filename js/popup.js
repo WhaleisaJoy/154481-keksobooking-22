@@ -1,4 +1,9 @@
-import { ROOM_TYPES_MAP } from './data.js';
+const ROOM_TYPES_MAP = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+};
 
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
@@ -49,6 +54,7 @@ const removeEmptyChildren = (element) => {
 const createPopup = ({author, offer}) => {
   const popup = popupTemplate.cloneNode(true);
 
+  popup.querySelector('.popup__avatar').src = author.avatar;
   popup.querySelector('.popup__title').textContent = offer.title;
   popup.querySelector('.popup__text--address').textContent = offer.address;
   popup.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
@@ -56,7 +62,6 @@ const createPopup = ({author, offer}) => {
   popup.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   popup.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   popup.querySelector('.popup__description').textContent = offer.description;
-  popup.querySelector('.popup__avatar').src = author;
 
   createFeatures(offer.features, popup);
   createPhotos(offer.photos, popup);

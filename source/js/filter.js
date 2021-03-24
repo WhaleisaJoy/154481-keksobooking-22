@@ -18,6 +18,7 @@ const HOUSING_PRICE_MAP = {
 const RERENDER_DELAY = 500;
 
 const filterType = (ad) => ad.offer.type === housingType.value || housingType.value === DEFAULT_SELECT_OPTION;
+
 const filterPrice = (ad) => {
   switch (housingPrice.value) {
     case 'low':
@@ -30,8 +31,10 @@ const filterPrice = (ad) => {
       return true;
   }
 };
+
 const filterRooms = (ad) => ad.offer.rooms === parseInt(housingRooms.value, 10) || housingRooms.value === DEFAULT_SELECT_OPTION;
 const filterGuests = (ad) => ad.offer.guests === parseInt(housingGuests.value, 10) || housingGuests.value === DEFAULT_SELECT_OPTION;
+
 const filterFeatures = (ad) => {
   const checkedFeatures = housingFeatures.querySelectorAll('input:checked');
 
@@ -47,7 +50,6 @@ const filterFeatures = (ad) => {
 
   return true;
 };
-
 
 const filterAds = (ads) => {
   let filteredAds = [];

@@ -3,7 +3,6 @@ import './upload-photo.js';
 import { renderSimilarAds } from './map.js';
 import { showGetDataErrorAlert } from './error.js';
 import { getData } from './api.js';
-
 import { setFilterListener } from './filter.js';
 
 const onSuccessData = (ads) => {

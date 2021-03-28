@@ -1,5 +1,5 @@
 /* global _:readonly */
-import { renderSimilarAds, markersLayerGroup, SIMILAR_ADS_COUNT } from './map.js';
+import { renderSimilarAds, markersLayerGroup, SIMILAR_ADS_COUNT, defaultAds } from './map.js';
 
 const mapFilterForm = document.querySelector('.map__filters');
 const housingType = mapFilterForm.querySelector('#housing-type');
@@ -10,7 +10,7 @@ const housingFeatures = mapFilterForm.querySelector('#housing-features');
 
 const DEFAULT_SELECT_OPTION = 'any';
 
-const HOUSING_PRICE_MAP = {
+const housingPriceMap = {
   low: 10000,
   high: 50000,
 };
@@ -22,11 +22,11 @@ const filterType = (ad) => ad.offer.type === housingType.value || housingType.va
 const filterPrice = (ad) => {
   switch (housingPrice.value) {
     case 'low':
-      return ad.offer.price <= HOUSING_PRICE_MAP.low;
+      return ad.offer.price <= housingPriceMap.low;
     case 'middle':
-      return ad.offer.price >= HOUSING_PRICE_MAP.low && ad.offer.price <= HOUSING_PRICE_MAP.high;
+      return ad.offer.price >= housingPriceMap.low && ad.offer.price <= housingPriceMap.high;
     case 'high':
-      return ad.offer.price >= HOUSING_PRICE_MAP.high;
+      return ad.offer.price >= housingPriceMap.high;
     default:
       return true;
   }
@@ -68,6 +68,11 @@ const filterAds = (ads) => {
   return filteredAds;
 }
 
+const resetFilterForm = () => {
+  mapFilterForm.reset();
+  renderSimilarAds(defaultAds);
+}
+
 
 
 const setFilterListener = (ads) => {
@@ -82,5 +87,5 @@ const setFilterListener = (ads) => {
   ));
 }
 
-export { setFilterListener };
+export { setFilterListener, resetFilterForm };
 

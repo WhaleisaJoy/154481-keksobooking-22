@@ -23,6 +23,12 @@ const resetMainPinMarker = () => {
   setAddress();
 }
 
+let defaultAds = [];
+
+const getDefaultAds = (ads) => {
+  defaultAds = ads.slice(0, SIMILAR_ADS_COUNT);
+}
+
 
 
 disableForms();
@@ -100,4 +106,4 @@ const renderSimilarAds = (ads) => {
     });
 }
 
-export { renderSimilarAds, resetMainPinMarker, markersLayerGroup, SIMILAR_ADS_COUNT }
+export { renderSimilarAds, resetMainPinMarker, markersLayerGroup, SIMILAR_ADS_COUNT, defaultAds, getDefaultAds }

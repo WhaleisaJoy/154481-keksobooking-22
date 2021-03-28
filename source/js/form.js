@@ -3,6 +3,7 @@ import { showSendDataSuccessAlert } from './success.js';
 import { showSendDataErrorAlert } from './error.js';
 import { sendData } from './api.js'
 import { resetPhotos } from './upload-photo.js';
+import { resetFilterForm } from './filter.js';
 
 const adForm = document.querySelector('.ad-form');
 const titleInput = adForm.querySelector('#title');
@@ -17,7 +18,7 @@ const resetButton = adForm.querySelector('.ad-form__reset');
 const TITLE_MIN_LENGTH = 30;
 const TITLE_MAX_LENGTH = 100;
 
-const TYPE_PRICE_MAP = {
+const typePriceMap = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
@@ -26,7 +27,7 @@ const TYPE_PRICE_MAP = {
 
 const PRICE_MAX_LENGTH = 1000000;
 
-const ROOMS_CAPACITY_MAP = {
+const roomsCapacityMap = {
   1: {
     permissibleCapacity: ['1'],
     errorMsg: 'Можно выбрать только 1 гостя',
@@ -45,10 +46,18 @@ const ROOMS_CAPACITY_MAP = {
   },
 };
 
+const setDefaultCapacity = () => {
+  const permissibleCapacity = roomsCapacityMap[roomNumber.value].permissibleCapacity;
+
+  if (!permissibleCapacity.includes(capacity.value)) {
+    capacity.value = permissibleCapacity[0];
+  }
+}
+
 const checkRoomsCapacity = () => {
-  const permissibleCapacity = ROOMS_CAPACITY_MAP[roomNumber.value].permissibleCapacity;
+  const permissibleCapacity = roomsCapacityMap[roomNumber.value].permissibleCapacity;
   const selectedCapacity = capacity.value;
-  const errorMsg = ROOMS_CAPACITY_MAP[roomNumber.value].errorMsg;
+  const errorMsg = roomsCapacityMap[roomNumber.value].errorMsg;
 
   if (!permissibleCapacity.includes(selectedCapacity)) {
     capacity.setCustomValidity(errorMsg);
@@ -80,9 +89,13 @@ const resetAdForm = () => {
   adForm.reset();
   resetMainPinMarker();
   resetPhotos();
+  setDefaultCapacity();
+  resetFilterForm();
 }
 
 
+
+setDefaultCapacity();
 
 titleInput.addEventListener('input', () => {
   const titleLength = titleInput.value.length;
@@ -102,7 +115,7 @@ titleInput.addEventListener('input', () => {
 price.addEventListener('input', () => {
   const priceLength = price.value.length;
   const priceCurrent = price.value;
-  const typeMinPriceValue = TYPE_PRICE_MAP[type.value];
+  const typeMinPriceValue = typePriceMap[type.value];
 
   if (priceCurrent < typeMinPriceValue) {
     price.setCustomValidity(`Минимальная цена для указанного типа жилья: ${typeMinPriceValue}`);
@@ -117,7 +130,7 @@ price.addEventListener('input', () => {
 
 
 type.addEventListener('change', () => {
-  const minPrice = TYPE_PRICE_MAP[type.value];
+  const minPrice = typePriceMap[type.value];
 
   price.placeholder = minPrice;
   price.min = minPrice;
@@ -139,52 +152,3 @@ resetButton.addEventListener('click', (evt) => {
   resetAdForm();
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*const capacityOptions = capacity.querySelectorAll('option');
-
-const disableInaccessibleCapacityOptions = () => {
-  capacityOptions.forEach((option) => {
-    if (roomNumber.value === '100') {
-      option.value === '0' ? option.disabled = false : option.disabled = true;
-    } else if (option.value > roomNumber.value || option.value === '0') {
-      option.disabled = true;
-    }
-  });
-}*/
-
-/*disableInaccessibleCapacityOptions();
-
-roomNumber.addEventListener('change', () => {
-  capacityOptions.forEach((option) => option.disabled = false);
-  disableInaccessibleCapacityOptions();
-
-  console.log(capacityOptions[capacity.selectedIndex]);
-});
-
-
-adForm.addEventListener('submit', (evt) => {
-  console.log(1);
-  console.log(capacityOptions[capacity.selectedIndex]);
-  if (capacityOptions[capacity.selectedIndex].disabled) {
-    evt.preventDefault();
-    capacity.setCustomValidity('Недопустимое количество гостей');
-  } else {
-    capacity.setCustomValidity('');
-  }
-  // capacity.reportValidity();
-});*/

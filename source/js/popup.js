@@ -1,4 +1,4 @@
-const ROOM_TYPES_MAP = {
+const roomTypesMap = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
@@ -58,7 +58,7 @@ const createPopup = ({author, offer}) => {
   popup.querySelector('.popup__title').textContent = offer.title;
   popup.querySelector('.popup__text--address').textContent = offer.address;
   popup.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
-  popup.querySelector('.popup__type').textContent = ROOM_TYPES_MAP[offer.type];
+  popup.querySelector('.popup__type').textContent = roomTypesMap[offer.type];
   popup.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   popup.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   popup.querySelector('.popup__description').textContent = offer.description;

@@ -7,28 +7,28 @@ const roomTypesMap = {
 
 const popupTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const createFeatures = (array, elememt) => {
+const createFeatures = (array, element) => {
   let fragment = document.createDocumentFragment();
-  const popupFeatures = elememt.querySelector('.popup__features');
+  const popupFeatures = element.querySelector('.popup__features');
   popupFeatures.innerHTML = '';
 
-  array.forEach((elememt) => {
+  array.forEach((element) => {
     let feature = document.createElement('li');
-    feature.className = `popup__feature popup__feature--${elememt}`;
+    feature.className = `popup__feature popup__feature--${element}`;
     fragment.appendChild(feature);
   });
 
   popupFeatures.appendChild(fragment);
 }
 
-const createPhotos = (array, elememt) => {
+const createPhotos = (array, element) => {
   let fragment = document.createDocumentFragment();
-  const popupPhotos = elememt.querySelector('.popup__photos');
+  const popupPhotos = element.querySelector('.popup__photos');
   popupPhotos.innerHTML = '';
 
-  array.forEach((elememt) => {
+  array.forEach((element) => {
     let photo = document.createElement('img');
-    photo.src = elememt;
+    photo.src = element;
     photo.className = 'popup__photo';
     photo.width = 45;
     photo.height = 40;

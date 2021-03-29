@@ -2,7 +2,7 @@ const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 const interactiveTags = ['input', 'select', 'textarea', 'button'];
 
-const switctInterctiveTags = (targetElement, disableActivity) => {
+const switchInterctiveTags = (targetElement, disableActivity) => {
   interactiveTags.forEach((element) => {
     let elementsInTargetElement = targetElement.querySelectorAll(element);
 
@@ -16,16 +16,16 @@ const disableForms = () => {
   adForm.classList.add('ad-form--disabled');
   mapFilters.classList.add('map__filters--disabled');
 
-  switctInterctiveTags(adForm, true);
-  switctInterctiveTags(mapFilters, true);
+  switchInterctiveTags(adForm, true);
+  switchInterctiveTags(mapFilters, true);
 }
 
 const activateForms = () => {
   adForm.classList.remove('ad-form--disabled');
   mapFilters.classList.remove('map__filters--disabled');
 
-  switctInterctiveTags(adForm, false);
-  switctInterctiveTags(mapFilters, false);
+  switchInterctiveTags(adForm, false);
+  switchInterctiveTags(mapFilters, false);
 }
 
 export { disableForms, activateForms };

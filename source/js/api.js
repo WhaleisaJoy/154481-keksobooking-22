@@ -1,5 +1,9 @@
+const SERVER_LINK = 'https://22.javascript.pages.academy/keksobooking';
+
+
+
 const getData = (onSuccess, onFail) => {
-  fetch('https://22.javascript.pages.academy/keksobooking/data')
+  fetch(`${SERVER_LINK}/data`)
     .then((response) => response.json())
     .then((data) => {
       onSuccess(data);
@@ -7,11 +11,11 @@ const getData = (onSuccess, onFail) => {
     .catch((err) => onFail(err));
 }
 
-const sendData = (onSuccess, onFail, body) => {
+const sendData = (onSuccess, onFail, method, body) => {
   fetch(
-    'https://22.javascript.pages.academy/keksobooking',
+    SERVER_LINK,
     {
-      method: 'POST',
+      method,
       body,
     },
   )

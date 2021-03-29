@@ -46,6 +46,13 @@ const roomsCapacityMap = {
   },
 };
 
+const setDefaultPrice = () => {
+  const minPrice = typePriceMap[type.value];
+
+  price.placeholder = minPrice;
+  price.min = minPrice;
+}
+
 const setDefaultCapacity = () => {
   const permissibleCapacity = roomsCapacityMap[roomNumber.value].permissibleCapacity;
 
@@ -75,11 +82,13 @@ const setAdFormSubmit = () => {
       showSendDataSuccessAlert();
     }
     const onFail = (err) => showSendDataErrorAlert(err);
+    const method = 'POST';
     const formData = new FormData(evt.target);
 
     sendData(
       onSuccess,
       onFail,
+      method,
       formData,
     );
   });
@@ -89,12 +98,14 @@ const resetAdForm = () => {
   adForm.reset();
   resetMainPinMarker();
   resetPhotos();
+  setDefaultPrice();
   setDefaultCapacity();
   resetFilterForm();
 }
 
 
 
+setDefaultPrice();
 setDefaultCapacity();
 
 titleInput.addEventListener('input', () => {
@@ -129,12 +140,7 @@ price.addEventListener('input', () => {
 });
 
 
-type.addEventListener('change', () => {
-  const minPrice = typePriceMap[type.value];
-
-  price.placeholder = minPrice;
-  price.min = minPrice;
-});
+type.addEventListener('change', setDefaultPrice);
 
 
 timeIn.addEventListener('change', () => timeOut.selectedIndex = timeIn.selectedIndex);
